@@ -51,6 +51,7 @@ jobs:
          skopeo login quay.io -u ${QUAY_ROBOT_USERNAME} -p ${QUAY_ROBOT_TOKEN}
       - name: Delete PR image
         shell: bash
+        continue-on-error: true
         env:
           PR: ${{steps.get_pr_number.outputs.result}}
         run: |
