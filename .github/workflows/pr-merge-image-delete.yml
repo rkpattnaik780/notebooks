@@ -56,6 +56,8 @@ jobs:
           PR: ${{steps.get_pr_number.outputs.result}}
         run: |
 
+          set +e # Don't abort if a delete operation fails as all images might not be available for the PR
+
           skopeo delete docker://${QUAY_IMAGE_REPO}:base-ubi8-python-3.8-pr-${{ env.PR }}
           skopeo delete docker://${QUAY_IMAGE_REPO}:base-ubi8-python-3.8-pr-${{ env.PR }}
           skopeo delete docker://${QUAY_IMAGE_REPO}:base-c9s-python-3.9-pr-${{ env.PR }}
