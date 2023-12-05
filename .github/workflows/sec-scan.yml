@@ -111,3 +111,29 @@ jobs:
       - name: Push the files
         run: |
               git fetch origin  ${{ env.SEC_SCAN_BRANCH }} && git pull origin  ${{ env.SEC_SCAN_BRANCH }} && git add . && git commit -m "Update security scans" && git push origin  ${{ env.SEC_SCAN_BRANCH }}
+
+  # Creates the Pull Request
+  open-pull-request:
+    needs: [update-n-version, update-n-1-version]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ env.SEC_SCAN_BRANCH }}
+          destination_branch: ${{ env.BRANCH_NAME}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_label: "automated pr"
+          pr_title: "[Digest Updater Action] Update notebook's imageStreams image tag to digest format"
+          pr_body: |
+            :rocket: This is an automated Pull Request.
+
+            This PR updates the `manifests/base/params.env` file with the latest updated SHA digests of the notebooks (N & N-1).
+            Created by `/.github/workflows/notebooks-digest-updater-upstream.yaml`
+
+            :exclamation: **IMPORTANT NOTE**: Remember to delete the ` ${{ env.SEC_SCAN_BRANCH }}` branch after merging the changes
