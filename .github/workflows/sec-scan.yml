@@ -102,7 +102,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      - name: execute py script # run main.py
+      - name: execute py script # run trial.py
         env:
           HASH_N : steps.hash-n.outputs.HASH_N
           RELEASE_VERSION_N: 2023b
