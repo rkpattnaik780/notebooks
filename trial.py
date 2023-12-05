@@ -105,5 +105,5 @@ for key, value in my_dictionary.items():
 final_markdown = markdown_content.format(table_content=formatted_data)
 
 # Writing to the markdown file
-with open("security_scan_results_2.md", "w") as markdown_file:
+with open("security_scan_results_3.md", "w") as markdown_file:
     markdown_file.write(final_markdown)
