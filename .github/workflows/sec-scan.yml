@@ -1,0 +1,75 @@
+---
+# The aim of this GitHub workflow is to update the SECURITY.md with latest security scan results.
+name: Update notebook image build commit hashes
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+        description: "Provide the name of the branch you want to update ex main, vYYYYx etc: "
+        # Put the scheduler on comment until automate the full release procedure
+        # schedule:
+        #   - cron: "0 0 * * 5"  #Scheduled every Friday
+env:
+  SEC_SCAN_BRANCH: sec-scan-${{ github.run_id }}
+  BRANCH_NAME: ${{ github.event.inputs.branch || 'main' }}
+  RELEASE_VERSION_N: 2023b
+  RELEASE_VERSION_N_1: 2023a
+jobs:
+  initialize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Install Skopeo CLI
+        shell: bash
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install skopeo
+
+      # Checkout the branch
+      - name: Checkout branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+
+      # Create a new branch
+      - name: Create a new branch
+        run: |
+         echo ${{ env.SEC_SCAN_BRANCH }}
+         git checkout -b ${{ env.SEC_SCAN_BRANCH }}
+         git push --set-upstream origin ${{ env.SEC_SCAN_BRANCH }}
+
+  update-n-version:
+    needs: [initialize]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Configure Git
+        run: |
+         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+         git config --global user.name "GitHub Actions"
+
+      # Get the latest weekly build commit hash: https://github.com/opendatahub-io/notebooks/commits/2023b
+      - name: Checkout upstream notebooks repo
+        uses: actions/checkout@v3
+        with:
+          repository: opendatahub-io/notebooks.git
+          ref: ${{ env.RELEASE_VERSION_N }}
+
+      - name: Retrieve latest weekly commit hash from the release branch
+        id: hash-n
+        shell: bash
+        run: |
+          echo "HASH_N=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
+
+      # Checkout the release branch to apply the updates
+      - name: Checkout release branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.SEC_SCAN_BRANCH }}
+
+      - name: Fetch digest, and update the params.env file
+        run: |
+              echo Latest commit is: ${{ steps.hash-n.outputs.HASH_N }} on ${{ env.RELEASE_VERSION_N}}
