@@ -104,7 +104,7 @@ jobs:
 
       - name: execute py script # run trial.py
         env:
-          HASH_N : steps.hash-n.outputs.HASH_N
+          HASH_N : ${{ steps.hash-n.outputs.HASH_N }}
           RELEASE_VERSION_N: 2023b
         run: python trial.py
 
