@@ -9,6 +9,10 @@ from collections import Counter
 IMAGES = [
     "odh-minimal-notebook-image-n",
     "odh-minimal-gpu-notebook-image-n",
+    "odh-pytorch-gpu-notebook-image-n",
+    "odh-generic-data-science-notebook-image-n",
+    "odh-tensorflow-gpu-notebook-image-n",
+    "odh-trustyai-notebook-image-n"
 ]
 
 RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N'] # "2023b"
