@@ -12,7 +12,11 @@ IMAGES = [
     "odh-pytorch-gpu-notebook-image-n",
     "odh-generic-data-science-notebook-image-n",
     "odh-tensorflow-gpu-notebook-image-n",
-    "odh-trustyai-notebook-image-n"
+    "odh-trustyai-notebook-image-n",
+    "odh-habana-notebook-image-n",
+    "odh-codeserver-notebook-n",
+    "odh-rstudio-notebook-n",
+    "odh-rstudio-gpu-notebook-n"
 ]
 
 RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
