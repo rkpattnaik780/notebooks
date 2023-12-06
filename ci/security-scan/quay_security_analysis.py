@@ -76,7 +76,7 @@ d2 = today.strftime("%B %d, %Y")
 
 markdown_content = """# Security Scan Results
 
-Date: {d2}
+Date: {todays_date}
 
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
@@ -91,7 +91,7 @@ for key, value in my_dictionary.items():
         formatted_data += f" {count} |"
     formatted_data += "\n"
 
-final_markdown = markdown_content.format(table_content=formatted_data)
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2)
 
 # Writing to the markdown file
 with open("ci/security_scan_results.md", "w") as markdown_file:
