@@ -1,7 +1,7 @@
 import os
 import subprocess
 import re
-
+from datetime import date
 import requests
 from collections import Counter
 
@@ -71,7 +71,12 @@ for i, image in enumerate(IMAGES):
     for severity, count in severity_counts.items():
         my_dictionary[latest_tag][severity] = count
 
+today = date.today()
+d2 = today.strftime("%B %d, %Y")
+
 markdown_content = """# Security Scan Results
+
+Date: {d2}
 
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
