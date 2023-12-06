@@ -107,11 +107,14 @@ jobs:
           destination_branch: ${{ env.BRANCH_NAME}}
           github_token: ${{ secrets.GH_TOKEN }}
           pr_label: "automated pr"
-          pr_title: "[Digest Updater Action] Update notebook's imageStreams image tag to digest format"
+          pr_title: "[Security Scanner Action] Weekly update of security vulnerabilities reported by Quay"
           pr_body: |
             :rocket: This is an automated Pull Request.
 
-            This PR updates the `manifests/base/params.env` file with the latest updated SHA digests of the notebooks (N & N-1).
-            Created by `/.github/workflows/notebooks-digest-updater-upstream.yaml`
+            This PR updates:
+
+            * `ci/security-scan/security_scan_results.md` file with the latest security vulnerabilities reported by Quay.
+            * `ci/security-scan/weekly_commit_ids` with the latest updated SHA digests of the notebooks (N & N-1)
+            Created by `/.github/workflows/sec-scan.yaml`
 
             :exclamation: **IMPORTANT NOTE**: Remember to delete the ` ${{ env.SEC_SCAN_BRANCH }}` branch after merging the changes
