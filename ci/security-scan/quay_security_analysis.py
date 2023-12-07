@@ -98,7 +98,7 @@ Date: {todays_date}
 
 formatted_data = ""
 for key, value in my_dictionary.items():
-    formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:{my_dictionary['sha']}?tab=vulnerabilities) |"
+    formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
         formatted_data += f" {count} |"
