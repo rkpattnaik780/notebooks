@@ -1,5 +1,5 @@
 ---
-# The aim of this GitHub workflow is to update the SECURITY.md with latest security scan results.
+# The aim of this GitHub workflow is to update the `ci/securitty-scan/security_scan_results.md` with latest security scan results.
 name: Update notebook image security reports
 on:
   workflow_dispatch:

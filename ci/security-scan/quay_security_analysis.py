@@ -4,6 +4,7 @@ import re
 from datetime import date
 import requests
 from collections import Counter
+import fileinput
 
 
 IMAGES = [
@@ -19,6 +20,8 @@ IMAGES = [
     "odh-rstudio-gpu-notebook-n"
 ]
 
+commit_id_path = "ci/security-scan/weekly_commit_ids.env"
+
 RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
 HASH_N = os.environ['HASH_N']
 
@@ -27,7 +30,7 @@ my_dictionary = {}
 for i, image in enumerate(IMAGES):
 
     # Read the contents of params.env and extract the image information
-    with open('ci/security-scan/weekly_commit_ids.env', 'r') as params_file:
+    with open(commit_id_path, 'r') as params_file:
         img_line = next(line for line in params_file if re.search(f"{image}=", line))
         img = img_line.split('=')[1].strip()
 
@@ -71,9 +74,15 @@ for i, image in enumerate(IMAGES):
     severity_counts = Counter(severity_levels)
 
     my_dictionary[latest_tag] = {}
+    my_dictionary[latest_tag]['sha']= digest
 
     for severity, count in severity_counts.items():
         my_dictionary[latest_tag][severity] = count
+    
+    for line in fileinput.input(commit_id_path, inplace=True):
+        if line.startswith(f"{image}="):
+            line = f"{image}={output}\n"
+        print(line, end="")
 
 today = date.today()
 d2 = today.strftime("%B %d, %Y")
@@ -89,7 +98,7 @@ Date: {todays_date}
 
 formatted_data = ""
 for key, value in my_dictionary.items():
-    formatted_data += f"| {key} |"
+    formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:{my_dictionary['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
         formatted_data += f" {count} |"
@@ -98,5 +107,5 @@ for key, value in my_dictionary.items():
 final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2)
 
 # Writing to the markdown file
-with open("ci/security_scan_results.md", "w") as markdown_file:
+with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
     markdown_file.write(final_markdown)
