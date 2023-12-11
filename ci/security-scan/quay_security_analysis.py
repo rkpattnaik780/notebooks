@@ -15,15 +15,15 @@ HASH_N = "73c20d1" # os.environ['HASH_N']
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
-    "odh-minimal-gpu-notebook-image-n",
-    "odh-pytorch-gpu-notebook-image-n",
-    "odh-generic-data-science-notebook-image-n",
-    "odh-tensorflow-gpu-notebook-image-n",
-    "odh-trustyai-notebook-image-n",
-    "odh-habana-notebook-image-n",
-    "odh-codeserver-notebook-n",
-    "odh-rstudio-notebook-n",
-    "odh-rstudio-gpu-notebook-n"
+    # "odh-minimal-gpu-notebook-image-n",
+    # "odh-pytorch-gpu-notebook-image-n",
+    # "odh-generic-data-science-notebook-image-n",
+    # "odh-tensorflow-gpu-notebook-image-n",
+    # "odh-trustyai-notebook-image-n",
+    # "odh-habana-notebook-image-n",
+    # "odh-codeserver-notebook-n",
+    # "odh-rstudio-notebook-n",
+    # "odh-rstudio-gpu-notebook-n"
 ]
 
 def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
