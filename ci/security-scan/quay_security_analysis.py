@@ -62,7 +62,9 @@ def get_image_security_reports(commit_id_path, IMAGES):
             "Authorization": "Bearer 3PZX0UYX6FSENKQ14I1VTHUJ4KGBS8L5LHJ0W1RN7TPHFVQ4P0NR7VQNCZIFRC9B_1"
         }
 
-        url = f"https://quay.io/api/v1/repository/opendatahub/workbench-images/manifest/sha256:{digest}/security"
+        url = f"https://quay.io/api/v1/repository/opendatahub/workbench-images/manifest/{digest}/security"
+
+        print("url - ", url)
 
         response = requests.get(url, headers=headers)
         data = response.json()
