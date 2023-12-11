@@ -6,12 +6,6 @@ import requests
 from collections import Counter
 import fileinput
 
-my_dictionary = {}
-
-commit_id_path = "ci/security-scan/weekly_commit_ids.env"
-
-RELEASE_VERSION_N = "2023b" # os.environ['RELEASE_VERSION_N']
-HASH_N = "73c20d1" # os.environ['HASH_N']
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
@@ -26,18 +20,29 @@ IMAGES = [
     "odh-rstudio-gpu-notebook-n"
 ]
 
-def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
+commit_id_path = "ci/security-scan/weekly_commit_ids.env"
+
+RELEASE_VERSION_N = "2023b" # os.environ['RELEASE_VERSION_N']
+HASH_N = "73c20d1" # os.environ['HASH_N']
+
+my_dictionary = {}
+
+for i, image in enumerate(IMAGES):
+
+    # Read the contents of params.env and extract the image information
     with open(commit_id_path, 'r') as params_file:
         img_line = next(line for line in params_file if re.search(f"{image}=", line))
         img = img_line.split('=')[1].strip()
 
     registry = img.split('@')[0]
 
+    # Get source tag from skopeo inspection
     src_tag_cmd = f'skopeo inspect docker://{img} | jq \'.Env[] | select(startswith("OPENSHIFT_BUILD_NAME=")) | split("=")[1]\''
     src_tag = subprocess.check_output(src_tag_cmd, shell=True, text=True).strip().strip('"').replace('-amd64', '')
 
     regex = f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
     latest_tag_cmd = f'skopeo inspect docker://{img} | jq -r --arg regex "{regex}" \'.RepoTags | map(select(. | test($regex))) | .[0]\''
+
     latest_tag = subprocess.check_output(latest_tag_cmd, shell=True, text=True).strip()
 
     digest_cmd = f'skopeo inspect docker://{registry}:{latest_tag} | jq .Digest | tr -d \'"\''
@@ -64,6 +69,8 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
                 vulnerabilities.append(vulnerability)
 
     severity_levels = [entry.get("Severity", "Unknown") for entry in vulnerabilities]
+
+    # Count occurrences of each severity level
     severity_counts = Counter(severity_levels)
 
     my_dictionary[latest_tag] = {}
@@ -77,8 +84,28 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
             line = f"{image}={output}\n"
         print(line, end="")
 
-# Your existing code here...
+today = date.today()
+d2 = today.strftime("%B %d, %Y")
 
-# Call the function for each image in IMAGES
-for i, image in enumerate(IMAGES):
-    process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N)
+markdown_content = """# Security Scan Results
+
+Date: {todays_date}
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+{table_content}
+"""
+
+formatted_data = ""
+for key, value in my_dictionary.items():
+    formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+        formatted_data += f" {count} |"
+    formatted_data += "\n"
+
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2)
+
+# Writing to the markdown file
+with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
+    markdown_file.write(final_markdown)
