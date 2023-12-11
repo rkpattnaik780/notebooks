@@ -59,7 +59,7 @@ def get_image_security_reports(commit_id_path, IMAGES):
 
         headers = {
             "X-Requested-With": "XMLHttpRequest",
-            "Authorization": "Bearer IMUSI3RVH0FQ426LNP1CY7Q1MT4KXMZMWE6W5RQ2JYERP2RJQFL8LS1OF3Y18WOK"
+            "Authorization": "Bearer 3PZX0UYX6FSENKQ14I1VTHUJ4KGBS8L5LHJ0W1RN7TPHFVQ4P0NR7VQNCZIFRC9B_1"
         }
 
         url = f"https://quay.io/api/v1/repository/opendatahub/workbench-images/manifest/sha256:{digest}/security"
@@ -102,8 +102,8 @@ def get_image_security_reports(commit_id_path, IMAGES):
 
 commit_id_path = "ci/security-scan/weekly_commit_ids.env"
 
-RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N'] # 
-HASH_N = os.environ['HASH_N'] # 
+RELEASE_VERSION_N = "2023b" # os.environ['RELEASE_VERSION_N'] # 2023b
+HASH_N = "73c20d1" # os.environ['HASH_N']
 
 my_dictionary = {}
 
