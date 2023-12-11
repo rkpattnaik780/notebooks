@@ -77,8 +77,32 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
             line = f"{image}={output}\n"
         print(line, end="")
 
-# Your existing code here...
-
 # Call the function for each image in IMAGES
 for i, image in enumerate(IMAGES):
     process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N)
+
+today = date.today()
+d2 = today.strftime("%B %d, %Y")
+
+markdown_content = """# Security Scan Results
+
+Date: {todays_date}
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+{table_content}
+"""
+
+formatted_data = ""
+for key, value in my_dictionary.items():
+    formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+        formatted_data += f" {count} |"
+    formatted_data += "\n"
+
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2)
+
+# Writing to the markdown file
+with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
+    markdown_file.write(final_markdown)
