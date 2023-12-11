@@ -9,28 +9,19 @@ import fileinput
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
-    "odh-minimal-gpu-notebook-image-n",
-    "odh-pytorch-gpu-notebook-image-n",
-    "odh-generic-data-science-notebook-image-n",
-    "odh-tensorflow-gpu-notebook-image-n",
-    "odh-trustyai-notebook-image-n",
-    "odh-habana-notebook-image-n",
-    "odh-codeserver-notebook-n",
-    "odh-rstudio-notebook-n",
-    "odh-rstudio-gpu-notebook-n"
+    # "odh-minimal-gpu-notebook-image-n",
+    # "odh-pytorch-gpu-notebook-image-n",
+    # "odh-generic-data-science-notebook-image-n",
+    # "odh-tensorflow-gpu-notebook-image-n",
+    # "odh-trustyai-notebook-image-n",
+    # "odh-habana-notebook-image-n",
+    # "odh-codeserver-notebook-n",
+    # "odh-rstudio-notebook-n",
+    # "odh-rstudio-gpu-notebook-n"
 ]
 
 IMAGES_N = [
-    "odh-minimal-notebook-image-n",
-    "odh-minimal-gpu-notebook-image-n",
-    "odh-pytorch-gpu-notebook-image-n",
-    "odh-generic-data-science-notebook-image-n",
-    "odh-tensorflow-gpu-notebook-image-n",
-    "odh-trustyai-notebook-image-n",
-    "odh-habana-notebook-image-n",
-    "odh-codeserver-notebook-n",
-    "odh-rstudio-notebook-n",
-    "odh-rstudio-gpu-notebook-n"
+    "odh-minimal-notebook-image-n-1",
 ]
 
 def get_image_security_reports(commit_id_path, IMAGES):
@@ -64,12 +55,8 @@ def get_image_security_reports(commit_id_path, IMAGES):
 
         url = f"https://quay.io/api/v1/repository/opendatahub/workbench-images/manifest/{digest}/security"
 
-        print("url - ", url)
-
         response = requests.get(url, headers=headers)
         data = response.json()
-
-        print(data)
 
         vulnerabilities = []
 
