@@ -112,7 +112,7 @@ my_dictionary = {}
 today = date.today()
 d2 = today.strftime("%B %d, %Y")
 
-main_security_report = get_image_security_reports
+main_security_report = get_image_security_reports(commit_id_path, IMAGES)
 
 markdown_content = """# Security Scan Results
 
