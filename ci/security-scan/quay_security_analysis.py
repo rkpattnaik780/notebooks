@@ -10,8 +10,22 @@ my_dictionary = {}
 
 commit_id_path = "ci/security-scan/weekly_commit_ids.env"
 
-RELEASE_VERSION_N = "2023b" # os.environ['RELEASE_VERSION_N']
-HASH_N = "73c20d1" # os.environ['HASH_N']
+
+
+IMAGES_MAIN = [
+    "odh-minimal-notebook-image-main",
+    "odh-runtime-minimal-notebook-image-main",
+    "odh-runtime-data-science-notebook-image-main",
+    # "odh-minimal-gpu-notebook-image-n",
+    # "odh-pytorch-gpu-notebook-image-n",
+    # "odh-generic-data-science-notebook-image-n",
+    # "odh-tensorflow-gpu-notebook-image-n",
+    # "odh-trustyai-notebook-image-n",
+    # "odh-habana-notebook-image-n",
+    # "odh-codeserver-notebook-n",
+    # "odh-rstudio-notebook-n",
+    # "odh-rstudio-gpu-notebook-n"
+]
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
@@ -52,7 +66,14 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     src_tag_cmd = f'skopeo inspect docker://{img} | jq \'.Env[] | select(startswith("OPENSHIFT_BUILD_NAME=")) | split("=")[1]\''
     src_tag = subprocess.check_output(src_tag_cmd, shell=True, text=True).strip().strip('"').replace('-amd64', '')
 
-    regex = f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
+
+    regex = "" # f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
+
+    if RELEASE_VERSION_N == "":
+        regex = f"{src_tag}-\\d+-{HASH_N}"
+    else:
+        regex = f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
+
     latest_tag_cmd = f'skopeo inspect docker://{img} | jq -r --arg regex "{regex}" \'.RepoTags | map(select(. | test($regex))) | .[0]\''
     latest_tag = subprocess.check_output(latest_tag_cmd, shell=True, text=True).strip()
 
@@ -93,6 +114,24 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
             line = f"{image}={output}\n"
         print(line, end="")
 
+HASH_MAIN="0df7031"
+
+for i, image in enumerate(IMAGES_MAIN):
+    process_image(image, commit_id_path, "", HASH_MAIN)
+
+branch_main_data = ""
+for key, value in my_dictionary.items():
+    branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+        branch_main_data += f" {count} |"
+    branch_main_data += "\n"
+
+my_dictionary = {}
+
+RELEASE_VERSION_N = "2023b" # os.environ['RELEASE_VERSION_N']
+HASH_N = "73c20d1" # os.environ['HASH_N']
+
 # Call the function for each image in IMAGES
 for i, image in enumerate(IMAGES):
     process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N)
@@ -128,17 +167,26 @@ markdown_content = """# Security Scan Results
 
 Date: {todays_date}
 
+# Branch main
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+{brnach_main}
+
+# Branch N
+
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
 {table_content}
 
+# Branch N - 1
 
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
 {branch_n}
 """
 
-final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data)
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data, branch_main=branch_main_data)
 
 # Writing to the markdown file
 with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
