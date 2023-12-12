@@ -15,8 +15,8 @@ HASH_N = "73c20d1" # os.environ['HASH_N']
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
-    "odh-runtime-minimal-notebook-image-n"
-    "odh-runtime-data-science-notebook-image-n"
+    "odh-runtime-minimal-notebook-image-n",
+    "odh-runtime-data-science-notebook-image-n",
     # "odh-minimal-gpu-notebook-image-n",
     # "odh-pytorch-gpu-notebook-image-n",
     # "odh-generic-data-science-notebook-image-n",
