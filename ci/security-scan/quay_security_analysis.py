@@ -16,6 +16,7 @@ HASH_N = "73c20d1" # os.environ['HASH_N']
 IMAGES = [
     "odh-minimal-notebook-image-n",
     "odh-runtime-minimal-notebook-image-n"
+    "odh-runtime-data-science-notebook-image-n"
     # "odh-minimal-gpu-notebook-image-n",
     # "odh-pytorch-gpu-notebook-image-n",
     # "odh-generic-data-science-notebook-image-n",
@@ -31,6 +32,7 @@ IMAGES_N_1 = [
     "odh-minimal-notebook-image-n-1",
     "odh-minimal-gpu-notebook-image-n-1",
     "odh-pytorch-gpu-notebook-image-n-1",
+    "odh-runtime-data-science-notebook-image-n-1",
     # "odh-generic-data-science-notebook-image-n-1",
     # "odh-tensorflow-gpu-notebook-image-n-1",
     # "odh-trustyai-notebook-image-n-1",
@@ -106,7 +108,13 @@ for key, value in my_dictionary.items():
         formatted_data += f" {count} |"
     formatted_data += "\n"
 
+my_dictionary = {}
 
+RELEASE_VERSION_N_1 = "2023a"
+HASH_N_1 = "60c9d7c"
+
+for i, image in enumerate(IMAGES_N_1):
+    process_image(image, commit_id_path, RELEASE_VERSION_N_1, HASH_N_1)
 
 branch_n_data = ""
 for key, value in my_dictionary.items():
