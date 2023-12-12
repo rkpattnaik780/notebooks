@@ -70,17 +70,22 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     regex = "" # f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
 
     if RELEASE_VERSION_N == "":
-        regex = f"{src_tag}-\\d+-{HASH_N}"
+        regex = f"{src_tag}-(\\d+-)?{HASH_N}"
     else:
         regex = f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
 
     latest_tag_cmd = f'skopeo inspect docker://{img} | jq -r --arg regex "{regex}" \'.RepoTags | map(select(. | test($regex))) | .[0]\''
+    print("latest_tag_cmd")
+    print(latest_tag_cmd)
     latest_tag = subprocess.check_output(latest_tag_cmd, shell=True, text=True).strip()
 
     digest_cmd = f'skopeo inspect docker://{registry}:{latest_tag} | jq .Digest | tr -d \'"\''
     digest = subprocess.check_output(digest_cmd, shell=True, text=True).strip()
 
     output = f"{registry}@{digest}"
+
+    print("output")
+    print(output)
 
     sha_ = output.split(":")[1]
 
