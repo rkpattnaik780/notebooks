@@ -15,15 +15,29 @@ HASH_N = "73c20d1" # os.environ['HASH_N']
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
-    "odh-minimal-gpu-notebook-image-n",
-    "odh-pytorch-gpu-notebook-image-n",
-    "odh-generic-data-science-notebook-image-n",
-    "odh-tensorflow-gpu-notebook-image-n",
-    "odh-trustyai-notebook-image-n",
-    "odh-habana-notebook-image-n",
-    "odh-codeserver-notebook-n",
-    "odh-rstudio-notebook-n",
-    "odh-rstudio-gpu-notebook-n"
+    "odh-runtime-minimal-notebook-image-n"
+    # "odh-minimal-gpu-notebook-image-n",
+    # "odh-pytorch-gpu-notebook-image-n",
+    # "odh-generic-data-science-notebook-image-n",
+    # "odh-tensorflow-gpu-notebook-image-n",
+    # "odh-trustyai-notebook-image-n",
+    # "odh-habana-notebook-image-n",
+    # "odh-codeserver-notebook-n",
+    # "odh-rstudio-notebook-n",
+    # "odh-rstudio-gpu-notebook-n"
+]
+
+IMAGES_N_1 = [
+    "odh-minimal-notebook-image-n-1",
+    "odh-minimal-gpu-notebook-image-n-1",
+    "odh-pytorch-gpu-notebook-image-n-1",
+    # "odh-generic-data-science-notebook-image-n-1",
+    # "odh-tensorflow-gpu-notebook-image-n-1",
+    # "odh-trustyai-notebook-image-n-1",
+    # "odh-habana-notebook-image-n-1",
+    # "odh-codeserver-notebook-n-1",
+    # "odh-rstudio-notebook-n-1",
+    # "odh-rstudio-gpu-notebook-n-1"
 ]
 
 def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
@@ -84,15 +98,6 @@ for i, image in enumerate(IMAGES):
 today = date.today()
 d2 = today.strftime("%B %d, %Y")
 
-markdown_content = """# Security Scan Results
-
-Date: {todays_date}
-
-| Image Name | Medium | Low | Unknown | High | Critical |
-|------------|-------|-----|---------|------|------|
-{table_content}
-"""
-
 formatted_data = ""
 for key, value in my_dictionary.items():
     formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
@@ -101,7 +106,31 @@ for key, value in my_dictionary.items():
         formatted_data += f" {count} |"
     formatted_data += "\n"
 
-final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2)
+
+
+branch_n_data = ""
+for key, value in my_dictionary.items():
+    branch_n_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+        branch_n_data += f" {count} |"
+    branch_n_data += "\n"
+
+markdown_content = """# Security Scan Results
+
+Date: {todays_date}
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+{table_content}
+
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+{branch_n}
+"""
+
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data)
 
 # Writing to the markdown file
 with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:

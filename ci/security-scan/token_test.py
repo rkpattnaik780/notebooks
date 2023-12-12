@@ -14,7 +14,7 @@
 
 import requests
 
-url = "https://quay.io/api/v1/repository/rpattnai/workbench-images/manifest/sha256:f802620c6e5aff5e1e719574b57253e07fccee101600a0b6bb96723827f379fd/security"
+url = "https://quay.io/api/v1/repository/opendatahub/workbench-images/manifest/sha256:7eea86c98f20ed3c58c838e40369d68219c13967daafc52970412f669f621522/security?vulnerabilities"
 headers = {
     "X-Requested-With": "XMLHttpRequest",
     "Authorization": "Bearer 3PZX0UYX6FSENKQ14I1VTHUJ4KGBS8L5LHJ0W1RN7TPHFVQ4P0NR7VQNCZIFRC9B_1",
