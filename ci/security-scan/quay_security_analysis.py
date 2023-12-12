@@ -119,20 +119,20 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
             line = f"{image}={output}\n"
         print(line, end="")
 
-HASH_MAIN="0df7031"
+# HASH_MAIN="0df7031"
 
-for i, image in enumerate(IMAGES_MAIN):
-    process_image(image, commit_id_path, "", HASH_MAIN)
+# for i, image in enumerate(IMAGES_MAIN):
+#     process_image(image, commit_id_path, "", HASH_MAIN)
 
-branch_main_data = ""
-for key, value in my_dictionary.items():
-    branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
-    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
-        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
-        branch_main_data += f" {count} |"
-    branch_main_data += "\n"
+# branch_main_data = ""
+# for key, value in my_dictionary.items():
+#     branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+#     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+#         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+#         branch_main_data += f" {count} |"
+#     branch_main_data += "\n"
 
-my_dictionary = {}
+# my_dictionary = {}
 
 RELEASE_VERSION_N = "2023b" # os.environ['RELEASE_VERSION_N']
 HASH_N = "73c20d1" # os.environ['HASH_N']
@@ -191,7 +191,7 @@ Date: {todays_date}
 {branch_n}
 """
 
-final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data, branch_main=branch_main_data)
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data, branch_main=None)
 
 # Writing to the markdown file
 with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
