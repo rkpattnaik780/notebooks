@@ -176,7 +176,7 @@ Date: {todays_date}
 
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
-{brnach_main}
+{branch_main}
 
 # Branch N
 
