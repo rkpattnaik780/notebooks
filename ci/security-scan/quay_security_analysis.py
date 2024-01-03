@@ -14,15 +14,15 @@ IMAGES_MAIN = [
     "odh-minimal-notebook-image-main",
     "odh-runtime-minimal-notebook-image-main",
     "odh-runtime-data-science-notebook-image-main",
-    "odh-minimal-gpu-notebook-image-main",
-    "odh-pytorch-gpu-notebook-image-main",
-    "odh-generic-data-science-notebook-image-main",
-    "odh-tensorflow-gpu-notebook-image-main",
-    "odh-trustyai-notebook-image-main",
-    "odh-habana-notebook-image-main",
-    "odh-codeserver-notebook-main",
-    "odh-rstudio-notebook-main",
-    "odh-rstudio-gpu-notebook-main"
+    # "odh-minimal-gpu-notebook-image-main",
+    # "odh-pytorch-gpu-notebook-image-main",
+    # "odh-generic-data-science-notebook-image-main",
+    # "odh-tensorflow-gpu-notebook-image-main",
+    # "odh-trustyai-notebook-image-main",
+    # "odh-habana-notebook-image-main",
+    # "odh-codeserver-notebook-main",
+    # "odh-rstudio-notebook-main",
+    # "odh-rstudio-gpu-notebook-main"
 ]
 
 IMAGES = [
@@ -78,6 +78,9 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
 
     digest_cmd = f'skopeo inspect docker://{registry}:{latest_tag} | jq .Digest | tr -d \'"\''
     digest = subprocess.check_output(digest_cmd, shell=True, text=True).strip()
+
+    print("digest")
+    print(digest)
 
     if digest is None or digest == "":
         return
