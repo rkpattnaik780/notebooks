@@ -10,33 +10,47 @@ my_dictionary = {}
 
 commit_id_path = "ci/security-scan/weekly_commit_ids.env"
 
+IMAGES_MAIN = [
+    "odh-minimal-notebook-image-main",
+    "odh-runtime-minimal-notebook-image-main",
+    "odh-runtime-data-science-notebook-image-main",
+    "odh-minimal-gpu-notebook-image-main",
+    "odh-pytorch-gpu-notebook-image-main",
+    "odh-generic-data-science-notebook-image-main",
+    "odh-tensorflow-gpu-notebook-image-main",
+    "odh-trustyai-notebook-image-main",
+    "odh-habana-notebook-image-main",
+    "odh-codeserver-notebook-main",
+    "odh-rstudio-notebook-main",
+    "odh-rstudio-gpu-notebook-main"
+]
 
 IMAGES = [
     "odh-minimal-notebook-image-n",
-    "odh-runtime-minimal-notebook-image-n",
-    "odh-runtime-data-science-notebook-image-n",
-    "odh-minimal-gpu-notebook-image-n",
-    "odh-pytorch-gpu-notebook-image-n",
-    "odh-generic-data-science-notebook-image-n",
-    "odh-tensorflow-gpu-notebook-image-n",
-    "odh-trustyai-notebook-image-n",
-    "odh-habana-notebook-image-n",
-    "odh-codeserver-notebook-n",
-    "odh-rstudio-notebook-n",
-    "odh-rstudio-gpu-notebook-n"
+    # "odh-runtime-minimal-notebook-image-n",
+    # "odh-runtime-data-science-notebook-image-n",
+    # "odh-minimal-gpu-notebook-image-n",
+    # "odh-pytorch-gpu-notebook-image-n",
+    # "odh-generic-data-science-notebook-image-n",
+    # "odh-tensorflow-gpu-notebook-image-n",
+    # "odh-trustyai-notebook-image-n",
+    # "odh-habana-notebook-image-n",
+    # "odh-codeserver-notebook-n",
+    # "odh-rstudio-notebook-n",
+    # "odh-rstudio-gpu-notebook-n"
 ]
 
 IMAGES_N_1 = [
     "odh-minimal-notebook-image-n-1",
-    "odh-minimal-gpu-notebook-image-n-1",
-    "odh-pytorch-gpu-notebook-image-n-1",
-    "odh-runtime-data-science-notebook-image-n-1",
-    "odh-generic-data-science-notebook-image-n-1",
-    "odh-tensorflow-gpu-notebook-image-n-1",
-    "odh-trustyai-notebook-image-n-1",
-    "odh-codeserver-notebook-n-1",
-    "odh-rstudio-notebook-n-1",
-    "odh-rstudio-gpu-notebook-n-1"
+    # "odh-minimal-gpu-notebook-image-n-1",
+    # "odh-pytorch-gpu-notebook-image-n-1",
+    # "odh-runtime-data-science-notebook-image-n-1",
+    # "odh-generic-data-science-notebook-image-n-1",
+    # "odh-tensorflow-gpu-notebook-image-n-1",
+    # "odh-trustyai-notebook-image-n-1",
+    # "odh-codeserver-notebook-n-1",
+    # "odh-rstudio-notebook-n-1",
+    # "odh-rstudio-gpu-notebook-n-1"
 ]
 
 def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
@@ -109,6 +123,19 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
 RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
 HASH_N = os.environ['HASH_N']
 
+for i, image in enumerate(IMAGES_MAIN):
+    process_image(image, commit_id_path, "", "0133259")
+
+branch_main_data = ""
+for key, value in my_dictionary.items():
+    branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+        branch_main_data += f" {count} |"
+    branch_main_data += "\n"
+
+my_dictionary = {}
+
 # Call the function for each image in IMAGES
 for i, image in enumerate(IMAGES):
     process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N)
@@ -144,6 +171,12 @@ markdown_content = """# Security Scan Results
 
 Date: {todays_date}
 
+# Branch main
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+{branch_main}
+
 # Branch N
 
 | Image Name | Medium | Low | Unknown | High | Critical |
@@ -157,7 +190,7 @@ Date: {todays_date}
 {branch_n}
 """
 
-final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data)
+final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data, branch_main=branch_main_data)
 
 # Writing to the markdown file
 with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
