@@ -79,6 +79,9 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     digest_cmd = f'skopeo inspect docker://{registry}:{latest_tag} | jq .Digest | tr -d \'"\''
     digest = subprocess.check_output(digest_cmd, shell=True, text=True).strip()
 
+    print("digest")
+    print(digest)
+
     if digest is None or digest == "":
         return
 
