@@ -6,7 +6,7 @@ import requests
 from collections import Counter
 import fileinput
 
-my_dictionary = {}
+branch_dictionary = {}
 
 commit_id_path = "ci/security-scan/weekly_commit_ids.env"
 
@@ -107,11 +107,11 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     severity_levels = [entry.get("Severity", "Unknown") for entry in vulnerabilities]
     severity_counts = Counter(severity_levels)
 
-    my_dictionary[latest_tag] = {}
-    my_dictionary[latest_tag]['sha']= digest
+    branch_dictionary[latest_tag] = {}
+    branch_dictionary[latest_tag]['sha']= digest
 
     for severity, count in severity_counts.items():
-        my_dictionary[latest_tag][severity] = count
+        branch_dictionary[latest_tag][severity] = count
     
     for line in fileinput.input(commit_id_path, inplace=True):
         if line.startswith(f"{image}="):
@@ -124,14 +124,14 @@ for i, image in enumerate(IMAGES_MAIN):
     process_image(image, commit_id_path, "", LATEST_MAIN_COMMIT)
 
 branch_main_data = ""
-for key, value in my_dictionary.items():
-    branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+for key, value in branch_dictionary.items():
+    branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{branch_dictionary[key]['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
         branch_main_data += f" {count} |"
     branch_main_data += "\n"
 
-my_dictionary = {}
+branch_dictionary = {}
 
 RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
 HASH_N = os.environ['HASH_N']
@@ -144,14 +144,14 @@ today = date.today()
 d2 = today.strftime("%B %d, %Y")
 
 branch_n_data = ""
-for key, value in my_dictionary.items():
-    branch_n_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+for key, value in branch_dictionary.items():
+    branch_n_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{branch_dictionary[key]['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
         branch_n_data += f" {count} |"
     branch_n_data += "\n"
 
-my_dictionary = {}
+branch_dictionary = {}
 
 RELEASE_VERSION_N_1 = os.environ['RELEASE_VERSION_N_1']
 HASH_N_1 = os.environ['HASH_N_1']
@@ -160,8 +160,8 @@ for i, image in enumerate(IMAGES_N_1):
     process_image(image, commit_id_path, RELEASE_VERSION_N_1, HASH_N_1)
 
 branch_n_1_data = ""
-for key, value in my_dictionary.items():
-    branch_n_1_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+for key, value in branch_dictionary.items():
+    branch_n_1_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{branch_dictionary[key]['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
         branch_n_1_data += f" {count} |"
