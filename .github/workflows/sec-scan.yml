@@ -58,7 +58,7 @@ jobs:
           repository: opendatahub-io/notebooks.git
           ref: ${{ env.RELEASE_VERSION_N }}
 
-      - name: Retrieve latest weekly commit hash from the release branch
+      - name: Retrieve latest weekly commit hash from the "N" branch
         id: hash-n
         shell: bash
         run: |
@@ -70,11 +70,23 @@ jobs:
           repository: opendatahub-io/notebooks.git
           ref: ${{ env.RELEASE_VERSION_N_1 }}
 
-      - name: Retrieve latest weekly commit hash from the release branch
+      - name: Retrieve latest weekly commit hash from the "N - 1" branch
         id: hash-n-1
         shell: bash
         run: |
           echo "HASH_N_1=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
+        
+      - name: Checkout "main" branch
+        uses: actions/checkout@v3
+        with:
+          repository: opendatahub-io/notebooks.git
+          ref: main
+
+      - name: Retrieve latest weekly commit hash from the "main" branch
+        id: hash-main
+        shell: bash
+        run: |
+          echo "LATEST_MAIN_COMMIT=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
 
       # Checkout the release branch to apply the updates
       - name: Checkout release branch
@@ -99,6 +111,8 @@ jobs:
 
           HASH_N_1: ${{ steps.hash-n-1.outputs.HASH_N_1 }}
           RELEASE_VERSION_N_1: 2023a
+
+          LATEST_MAIN_COMMIT: ${{ steps.hash-main.outputs.HASH_N }}
         run: make scan-image-vulnerabilities
 
       - name: Push the files

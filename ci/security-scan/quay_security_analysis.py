@@ -68,8 +68,7 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     src_tag_cmd = f'skopeo inspect docker://{img} | jq \'.Env[] | select(startswith("OPENSHIFT_BUILD_NAME=")) | split("=")[1]\''
     src_tag = subprocess.check_output(src_tag_cmd, shell=True, text=True).strip().strip('"').replace('-amd64', '')
 
-
-    regex = "" # f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
+    regex = ""
 
     if RELEASE_VERSION_N == "":
         regex = f"{src_tag}-(\\d+-)?{HASH_N}"
@@ -77,8 +76,6 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
         regex = f"{src_tag}-{RELEASE_VERSION_N}-\\d+-{HASH_N}"
 
     latest_tag_cmd = f'skopeo inspect docker://{img} | jq -r --arg regex "{regex}" \'.RepoTags | map(select(. | test($regex))) | .[0]\''
-    print("latest_tag_cmd")
-    print(latest_tag_cmd)
     latest_tag = subprocess.check_output(latest_tag_cmd, shell=True, text=True).strip()
 
     digest_cmd = f'skopeo inspect docker://{registry}:{latest_tag} | jq .Digest | tr -d \'"\''
@@ -88,9 +85,6 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
         return
 
     output = f"{registry}@{digest}"
-
-    print("output")
-    print(output)
 
     sha_ = output.split(":")[1]
 
@@ -124,12 +118,10 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
             line = f"{image}={output}\n"
         print(line, end="")
 
-
-RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
-HASH_N = os.environ['HASH_N']
+LATEST_MAIN_COMMIT = os.environ['LATEST_MAIN_COMMIT']
 
 for i, image in enumerate(IMAGES_MAIN):
-    process_image(image, commit_id_path, "", "0133259")
+    process_image(image, commit_id_path, "", LATEST_MAIN_COMMIT)
 
 branch_main_data = ""
 for key, value in my_dictionary.items():
@@ -141,6 +133,9 @@ for key, value in my_dictionary.items():
 
 my_dictionary = {}
 
+RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
+HASH_N = os.environ['HASH_N']
+
 # Call the function for each image in IMAGES
 for i, image in enumerate(IMAGES):
     process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N)
@@ -148,13 +143,13 @@ for i, image in enumerate(IMAGES):
 today = date.today()
 d2 = today.strftime("%B %d, %Y")
 
-formatted_data = ""
+branch_n_data = ""
 for key, value in my_dictionary.items():
-    formatted_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    branch_n_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
-        formatted_data += f" {count} |"
-    formatted_data += "\n"
+        branch_n_data += f" {count} |"
+    branch_n_data += "\n"
 
 my_dictionary = {}
 
@@ -164,13 +159,13 @@ HASH_N_1 = os.environ['HASH_N_1']
 for i, image in enumerate(IMAGES_N_1):
     process_image(image, commit_id_path, RELEASE_VERSION_N_1, HASH_N_1)
 
-branch_n_data = ""
+branch_n_1_data = ""
 for key, value in my_dictionary.items():
-    branch_n_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
+    branch_n_1_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{my_dictionary[key]['sha']}?tab=vulnerabilities) |"
     for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
         count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
-        branch_n_data += f" {count} |"
-    branch_n_data += "\n"
+        branch_n_1_data += f" {count} |"
+    branch_n_1_data += "\n"
 
 markdown_content = """# Security Scan Results
 
@@ -186,16 +181,16 @@ Date: {todays_date}
 
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
-{table_content}
+{branch_n}
 
 # Branch N - 1
 
 | Image Name | Medium | Low | Unknown | High | Critical |
 |------------|-------|-----|---------|------|------|
-{branch_n}
+{branch_n_1}
 """
 
-final_markdown = markdown_content.format(table_content=formatted_data, todays_date=d2, branch_n=branch_n_data, branch_main=branch_main_data)
+final_markdown = markdown_content.format(branch_n=branch_n_data, todays_date=d2, branch_n_1=branch_n_1_data, branch_main=branch_main_data)
 
 # Writing to the markdown file
 with open("ci/security-scan/security_scan_results.md", "w") as markdown_file:
