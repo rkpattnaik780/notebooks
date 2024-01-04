@@ -75,7 +75,7 @@ jobs:
         shell: bash
         run: |
           echo "HASH_N_1=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
-        
+
       - name: Checkout "main" branch
         uses: actions/checkout@v3
         with:
