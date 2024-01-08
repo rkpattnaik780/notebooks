@@ -2,6 +2,11 @@
 # The aim of this GitHub workflow is to update the `ci/securitty-scan/security_scan_results.md` with latest security scan results.
 name: Update notebook image security reports
 on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+        description: "Provide the name of the branch you want to update ex main, vYYYYx etc: "
   schedule:
     - cron: "0 0 * * 0"  #Scheduled every Friday
 env:
