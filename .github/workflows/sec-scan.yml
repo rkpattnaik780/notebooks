@@ -2,17 +2,11 @@
 # The aim of this GitHub workflow is to update the `ci/securitty-scan/security_scan_results.md` with latest security scan results.
 name: Update notebook image security reports
 on:
-  workflow_dispatch:
-    inputs:
-      branch:
-        required: true
-        description: "Provide the name of the branch you want to update ex main, vYYYYx etc: "
-        # Put the scheduler on comment until automate the full release procedure
-        # schedule:
-        #   - cron: "0 0 * * 5"  #Scheduled every Friday
+  schedule:
+    - cron: "0 0 * * 0"  #Scheduled every Friday
 env:
   SEC_SCAN_BRANCH: sec-scan-${{ github.run_id }}
-  BRANCH_NAME: ${{ github.event.inputs.branch || 'main' }}
+  BRANCH_NAME: main
   RELEASE_VERSION_N: 2023b
   RELEASE_VERSION_N_1: 2023a
 jobs:
