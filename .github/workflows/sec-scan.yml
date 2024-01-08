@@ -111,7 +111,7 @@ jobs:
           HASH_N_1: ${{ steps.hash-n-1.outputs.HASH_N_1 }}
           RELEASE_VERSION_N_1: 2023a
 
-          LATEST_MAIN_COMMIT: ${{ steps.hash-main.outputs.HASH_N }}
+          LATEST_MAIN_COMMIT: ${{ steps.hash-main.outputs.LATEST_MAIN_COMMIT }}
         run: make scan-image-vulnerabilities
 
       - name: Push the files
