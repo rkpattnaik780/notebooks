@@ -39,7 +39,7 @@ jobs:
          git checkout -b ${{ env.SEC_SCAN_BRANCH }}
          git push --set-upstream origin ${{ env.SEC_SCAN_BRANCH }}
 
-  update-n-version:
+  check-vulnerabilities:
     needs: [initialize]
     runs-on: ubuntu-latest
     permissions:
@@ -106,10 +106,10 @@ jobs:
       - name: execute py script  # run trial.py
         env:
           HASH_N: ${{ steps.hash-n.outputs.HASH_N }}
-          RELEASE_VERSION_N: 2023b
+          RELEASE_VERSION_N: ${{ env.RELEASE_VERSION_N }}
 
           HASH_N_1: ${{ steps.hash-n-1.outputs.HASH_N_1 }}
-          RELEASE_VERSION_N_1: 2023a
+          RELEASE_VERSION_N_1: ${{ env.RELEASE_VERSION_N_1 }}
 
           LATEST_MAIN_COMMIT: ${{ steps.hash-main.outputs.LATEST_MAIN_COMMIT }}
         run: make scan-image-vulnerabilities
@@ -120,7 +120,7 @@ jobs:
 
   # Creates the Pull Request
   open-pull-request:
-    needs: [update-n-version]
+    needs: [check-vulnerabilities]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
