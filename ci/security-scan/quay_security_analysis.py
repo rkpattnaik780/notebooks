@@ -89,12 +89,8 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     sha_ = output.split(":")[1]
 
     url = f"https://quay.io/api/v1/repository/opendatahub/workbench-images/manifest/sha256:{sha_}/security"
-    headers = {
-        "X-Requested-With": "XMLHttpRequest",
-        "Authorization": "Bearer 3PZX0UYX6FSENKQ14I1VTHUJ4KGBS8L5LHJ0W1RN7TPHFVQ4P0NR7VQNCZIFRC9B_1"
-    }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url)
     data = response.json()
 
     vulnerabilities = []

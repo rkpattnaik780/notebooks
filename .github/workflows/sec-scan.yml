@@ -133,7 +133,7 @@ jobs:
         with:
           source_branch: ${{ env.SEC_SCAN_BRANCH }}
           destination_branch: ${{ env.BRANCH_NAME}}
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_label: "automated pr"
           pr_title: "[Security Scanner Action] Weekly update of security vulnerabilities reported by Quay"
           pr_body: |
