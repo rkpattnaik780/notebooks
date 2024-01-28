@@ -1,0 +1,60 @@
+# Security Scan Results
+
+Date: January 28, 2024
+
+# Branch main
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+| [jupyter-minimal-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:ce8c509f8ad9b37cf6ad325bc5205d618f6414eb8dca2f97e63beda2f66e6466?tab=vulnerabilities) | 21 | 1 | 1 | 5 | 0 |
+| [runtime-minimal-ubi9-python-3.9-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:bbe68224fda2ae595c587d4d8477fd93bc7a3f980fe2eafa7be826d2e2987034?tab=vulnerabilities) | 22 | 1 | 1 | 1 | 0 |
+| [runtime-datascience-ubi9-python-3.9-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:195fc49b60b5d2288a2f16cb17a596365c94f0303595657e6703bf2929c1d89e?tab=vulnerabilities) | 27 | 1 | 6 | 6 | 0 |
+| [cuda-jupyter-minimal-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:4eb56df61a977d80e2d0f41de65ab787d9aeceb0fc84f7fac3833b7f9be67924?tab=vulnerabilities) | 15 | 1 | 1 | 5 | 0 |
+| [jupyter-pytorch-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:04202c7ea1c7e93b73a65088a34981c2fdf2492a4f4d681cf3aeac64ee42c7d5?tab=vulnerabilities) | 20 | 1 | 6 | 11 | 0 |
+| [jupyter-datascience-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:dc4e333d50843fc7bc352f48513cb6a1c068c73e7f92bb9158c57373ff74b41f?tab=vulnerabilities) | 26 | 1 | 6 | 11 | 0 |
+| [cuda-jupyter-tensorflow-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:821d5ed1216d3c66754647ecbc35c36068a644993fefa0dd25040c4c775228ef?tab=vulnerabilities) | 20 | 1 | 6 | 11 | 0 |
+| [jupyter-trustyai-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:675db19c8c3c714eda5cf87ff8a57d84121e41a931d9705bb15035cd4b6bee1b?tab=vulnerabilities) | 26 | 1 | 6 | 15 | 2 |
+| [habana-jupyter-1.10.0-ubi8-python-3.8-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:a70647f3986a241e5aed9450cf8486f0dc486b333392954d2f08a5b7daf2a7d8?tab=vulnerabilities) | 16 | 1 | 9 | 16 | 0 |
+| [codeserver-ubi9-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:371e2a0e370214dd20f4ebd24d56ac577813c2712e54f9c516bcee3703db71af?tab=vulnerabilities) | 19 | 1 | 1 | 2 | 0 |
+| [rstudio-c9s-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:47d5d7c060a7b69e727ce6533a64278c4d667db1c33d74a8a92bc9648f0db3ef?tab=vulnerabilities) | 2 | 1 | 9 | 1 | 0 |
+| [cuda-rstudio-c9s-python-3.9-20240124-879392e](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:b3149b3cdfd05ff7c0f46f26a4b8efba0f3f05d76a2485fe3a80eadf3832354b?tab=vulnerabilities) | 2 | 1 | 9 | 1 | 0 |
+
+
+# Branch N
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+| [jupyter-minimal-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:a7968cb1f97b2c5fc78b68cf3f8727a7ec2d76cd88b7ccc5ebbf0a0c5ba8fbef?tab=vulnerabilities) | 19 | 1 | 1 | 1 | 0 |
+| [runtime-minimal-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:25ed37603a5ea40b09d9e0ad0cc574615373c78fd8592a67e6af4b1763f71648?tab=vulnerabilities) | 22 | 1 | 1 | 1 | 0 |
+| [runtime-datascience-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:79506f3e86cc827594897a76acac815e5d926517914394ff5fa130ed14e3dd48?tab=vulnerabilities) | 25 | 1 | 6 | 4 | 0 |
+| [cuda-jupyter-minimal-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:465b0dc5f29aa12bcb5d525f7aadf4f592e2373367dc630fbec94474f80c6f8e?tab=vulnerabilities) | 13 | 1 | 1 | 1 | 0 |
+| [jupyter-pytorch-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:8168bbbd9dec447f0bc4105488cbf8621254630bbbf9bff3e6a103430ea8d0ff?tab=vulnerabilities) | 17 | 1 | 6 | 5 | 0 |
+| [runtime-pytorch-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:7e4da7b794fcba410de653084087a02c80a845dcc6ba25a21ff791498b1c6da6?tab=vulnerabilities) | 25 | 1 | 6 | 4 | 0 |
+| [jupyter-datascience-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:368abaa47f5f25a63473619b33a5274f5d8c2b06b76b645f20dce401ebbb9f20?tab=vulnerabilities) | 23 | 1 | 6 | 5 | 0 |
+| [cuda-jupyter-tensorflow-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:1a6b3b6b1248b472b018ff2cdef27e60ed3533a73687c244b0fab76e6cb25c1e?tab=vulnerabilities) | 17 | 1 | 6 | 5 | 0 |
+| [runtime-cuda-tensorflow-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:9448cc99abdcff8fc632eee7f29b5bb74b7b1c803651d9f49ce0388e3a5d051c?tab=vulnerabilities) | 19 | 1 | 6 | 4 | 0 |
+| [jupyter-trustyai-ubi9-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:99fc17b3e92e7e8e98a1e2cfc845106c91b3d09573b9bc8c07f985849e6675eb?tab=vulnerabilities) | 23 | 1 | 6 | 9 | 2 |
+| [habana-jupyter-1.10.0-ubi8-python-3.8-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:ad182d67a881c1a1f173451f8146ef626d6d6fcc65f8220ef0b5b90d7523f082?tab=vulnerabilities) | 14 | 1 | 9 | 11 | 0 |
+| [codeserver-c9s-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:08e41d28c23288fbf6e3b10d94821011eeecd9c91b6dcc2948230db217d71a37?tab=vulnerabilities) | 2 | 1 | 1 | 1 | 0 |
+| [rstudio-c9s-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:15bcde9155641f1716957187e97631603815a79bac87e4eadebd3596cc968982?tab=vulnerabilities) | 2 | 1 | 9 | 1 | 0 |
+| [cuda-rstudio-c9s-python-3.9-2023b-20240124-b8bdacc](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:9696b79ae6180257cb6d3556f849d5fce443b0053a0b61e0721c8db7cbf1721b?tab=vulnerabilities) | 2 | 1 | 9 | 1 | 0 |
+
+
+# Branch N - 1
+
+| Image Name | Medium | Low | Unknown | High | Critical |
+|------------|-------|-----|---------|------|------|
+| [jupyter-minimal-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:b726ca1b64012f559858f2591bf30fb975e2aca0a819fe3e9aa72e315b914cb7?tab=vulnerabilities) | 19 | 1 | 1 | 2 | 0 |
+| [runtime-minimal-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:cf7127ba5457849e8169f521edaedae7ffef404ef86fa3b7c5e7ae1a2f4cacf7?tab=vulnerabilities) | 0 | 0 | 0 | 0 | 0 |
+| [cuda-jupyter-minimal-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:b9545a99d0b56cc4e0db0852f993b5459141928cd9027f8da6942bdca3a41a55?tab=vulnerabilities) | 14 | 1 | 1 | 2 | 0 |
+| [jupyter-pytorch-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:08914c3eb22e13baaa38b7a3526781cb63eb170bf743ff84efd3716a79673d43?tab=vulnerabilities) | 14 | 1 | 1 | 2 | 0 |
+| [runtime-pytorch-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:d8605bc92ded887ff0c4c1c06ac5c9a8b91c4e401142425b34b47f9b99c24255?tab=vulnerabilities) | 22 | 1 | 1 | 1 | 0 |
+| [runtime-datascience-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:51a567a75ec2fecae5a6cc0c92a0255573052bdbf96d727e171b31e5e8a4b88a?tab=vulnerabilities) | 22 | 1 | 1 | 1 | 0 |
+| [jupyter-datascience-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:f117ffc002774b543f9ab6f0235259d0974824c8951679541afd37edf9d73ab4?tab=vulnerabilities) | 19 | 1 | 1 | 2 | 0 |
+| [cuda-jupyter-tensorflow-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:4a5964865455ba1e648ebf2348c752348b44f646639595b4923e663c64e21c71?tab=vulnerabilities) | 14 | 1 | 2 | 3 | 0 |
+| [runtime-cuda-tensorflow-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:d24fccdb8ed40ea7383acf6e6c9c4907f3ab7ef2d83eb75214c21d5943e622bc?tab=vulnerabilities) | 17 | 1 | 2 | 2 | 0 |
+| [jupyter-trustyai-ubi9-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:efa0d0a8eb4fb25972218faaa3dde01e326dd0ead2220748168172c5e31f4543?tab=vulnerabilities) | 19 | 1 | 1 | 6 | 2 |
+| [codeserver-c9s-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:6a83fc3dcee4c8405cc26b2e6e0bd35ffcaa1f7da189ce0c7b94fa215cc69ee9?tab=vulnerabilities) | 2 | 1 | 1 | 1 | 0 |
+| [rstudio-c9s-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:02a000e26336121919521201a900cab112ad1ed7a507bba37d79ed82d0574433?tab=vulnerabilities) | 2 | 1 | 9 | 1 | 0 |
+| [cuda-rstudio-c9s-python-3.9-2023a-20240122-c0cb504](https://quay.io/repository/opendatahub/workbench-images/manifest/sha256:f74e7033de4fd031e58eb8d7e49a37460bcfa88be752703a939bf72d32e794da?tab=vulnerabilities) | 2 | 1 | 9 | 1 | 0 |
+
