@@ -58,6 +58,16 @@ IMAGES_N_1 = [
     "odh-rstudio-gpu-notebook-n-1"
 ]
 
+def generate_markdown_table(branch_dictionary):
+    markdown_data = ""
+    for key, value in branch_dictionary.items():
+        markdown_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{value['sha']}?tab=vulnerabilities) |"
+        for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
+            count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
+            markdown_data += f" {count} |"
+        markdown_data += "\n"
+    return markdown_data
+
 def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
     with open(commit_id_path, 'r') as params_file:
         img_line = next(line for line in params_file if re.search(f"{image}=", line))
@@ -114,54 +124,34 @@ def process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N):
             line = f"{image}={output}\n"
         print(line, end="")
 
+today = date.today()
+d2 = today.strftime("%B %d, %Y")
+
 LATEST_MAIN_COMMIT = os.environ['LATEST_MAIN_COMMIT']
+branch_main_data = ""
 
 for i, image in enumerate(IMAGES_MAIN):
     process_image(image, commit_id_path, "", LATEST_MAIN_COMMIT)
-
-branch_main_data = ""
-for key, value in branch_dictionary.items():
-    branch_main_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{branch_dictionary[key]['sha']}?tab=vulnerabilities) |"
-    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
-        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
-        branch_main_data += f" {count} |"
-    branch_main_data += "\n"
-
+    branch_main_data = generate_markdown_table(branch_dictionary)
 branch_dictionary = {}
 
 RELEASE_VERSION_N = os.environ['RELEASE_VERSION_N']
 HASH_N = os.environ['HASH_N']
+branch_n_data = ""
 
 # Call the function for each image in IMAGES
 for i, image in enumerate(IMAGES):
     process_image(image, commit_id_path, RELEASE_VERSION_N, HASH_N)
-
-today = date.today()
-d2 = today.strftime("%B %d, %Y")
-
-branch_n_data = ""
-for key, value in branch_dictionary.items():
-    branch_n_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{branch_dictionary[key]['sha']}?tab=vulnerabilities) |"
-    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
-        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
-        branch_n_data += f" {count} |"
-    branch_n_data += "\n"
-
+    branch_n_data = generate_markdown_table(branch_dictionary)
 branch_dictionary = {}
 
 RELEASE_VERSION_N_1 = os.environ['RELEASE_VERSION_N_1']
 HASH_N_1 = os.environ['HASH_N_1']
+branch_n_1_data = ""
 
 for i, image in enumerate(IMAGES_N_1):
     process_image(image, commit_id_path, RELEASE_VERSION_N_1, HASH_N_1)
-
-branch_n_1_data = ""
-for key, value in branch_dictionary.items():
-    branch_n_1_data += f"| [{key}](https://quay.io/repository/opendatahub/workbench-images/manifest/{branch_dictionary[key]['sha']}?tab=vulnerabilities) |"
-    for severity in ['Medium', 'Low', 'Unknown', 'High', 'Critical']:
-        count = value.get(severity, 0)  # Get count for the severity, default to 0 if not present
-        branch_n_1_data += f" {count} |"
-    branch_n_1_data += "\n"
+    branch_n_1_data = generate_markdown_table(branch_dictionary)
 
 markdown_content = """# Security Scan Results
 
