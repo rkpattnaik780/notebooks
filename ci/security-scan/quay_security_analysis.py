@@ -11,18 +11,18 @@ my_dictionary = {}
 commit_id_path = "ci/security-scan/weekly_commit_ids.env"
 
 IMAGES_MAIN = [
-    "odh-minimal-notebook-image-main",
-    "odh-runtime-minimal-notebook-image-main",
+    # "odh-minimal-notebook-image-main",
+    # "odh-runtime-minimal-notebook-image-main",
     "odh-runtime-data-science-notebook-image-main",
-    "odh-minimal-gpu-notebook-image-main",
-    "odh-pytorch-gpu-notebook-image-main",
-    "odh-generic-data-science-notebook-image-main",
-    "odh-tensorflow-gpu-notebook-image-main",
-    "odh-trustyai-notebook-image-main",
-    "odh-habana-notebook-image-main",
-    "odh-codeserver-notebook-main",
-    "odh-rstudio-notebook-main",
-    "odh-rstudio-gpu-notebook-main"
+    # "odh-minimal-gpu-notebook-image-main",
+    # "odh-pytorch-gpu-notebook-image-main",
+    # "odh-generic-data-science-notebook-image-main",
+    # "odh-tensorflow-gpu-notebook-image-main",
+    # "odh-trustyai-notebook-image-main",
+    # "odh-habana-notebook-image-main",
+    # "odh-codeserver-notebook-main",
+    # "odh-rstudio-notebook-main",
+    # "odh-rstudio-gpu-notebook-main"
 ]
 
 IMAGES = [
